@@ -9,11 +9,36 @@
   if (year) year.textContent = new Date().getFullYear();
 
   // intro fade-out
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      intro?.classList.add("is-hidden");
-    }, 700);
-  });
+ window.addEventListener("load", () => {
+  // Keep intro visible until first interaction
+  if (!intro) return;
+
+  const hideIntro = () => {
+    intro.classList.add("is-hidden");
+
+    // Remove listeners after dismissing (avoid extra work)
+    window.removeEventListener("mousemove", onFirstInteraction);
+    window.removeEventListener("mousedown", onFirstInteraction);
+    window.removeEventListener("keydown", onFirstInteraction);
+    window.removeEventListener("touchstart", onFirstInteraction);
+    window.removeEventListener("scroll", onFirstInteraction);
+  };
+
+  let dismissed = false;
+  const onFirstInteraction = () => {
+    if (dismissed) return;
+    dismissed = true;
+    hideIntro();
+  };
+
+  // Attach “first interaction” listeners
+  window.addEventListener("mousemove", onFirstInteraction, { once: true });
+  window.addEventListener("mousedown", onFirstInteraction, { once: true });
+  window.addEventListener("keydown", onFirstInteraction, { once: true });
+  window.addEventListener("touchstart", onFirstInteraction, { once: true, passive: true });
+  window.addEventListener("scroll", onFirstInteraction, { once: true, passive: true });
+});
+``
 
   // mobile nav
   if (navToggle && navMenu) {
