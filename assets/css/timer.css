@@ -1,0 +1,133 @@
+:root {
+  /* Optional: override or add tokens for timer card */
+}
+
+/* Ensure the timer section uses a single column layout */
+.grid--single {
+  grid-template-columns: 1fr;
+}
+
+.card--timer {
+  padding: 28px;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.timer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.timer__title {
+  letter-spacing: .35em;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.timer__subtitle {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.timer__status {
+  text-align: right;
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+.timer__clock {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.timer__mode {
+  margin-top: 2px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.timer__grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 860px) {
+  .timer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .timer__grid .timer__block:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.timer__block {
+  border: 1px solid rgba(255, 255, 255, .10);
+  background: rgba(0, 0, 0, .35);
+  border-radius: 20px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+
+.timer__label {
+  font-size: 10px;
+  letter-spacing: .35em;
+  color: var(--muted2);
+}
+
+.timer__value {
+  margin-top: 8px;
+  font-size: clamp(34px, 4vw, 56px);
+  color: var(--text);
+  text-shadow: 0 0 22px rgba(255, 255, 255, .18);
+  line-height: 1;
+}
+
+.timer__meta {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.timer__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #34d399;
+  box-shadow: 0 0 16px rgba(52, 211, 153, .5);
+}
+
+.timer__dot.future {
+  background: #fbbf24;
+  box-shadow: 0 0 16px rgba(251, 191, 36, .5);
+}
+
+.timer__hint {
+  margin-top: 22px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .04);
+  border-radius: 18px;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}

@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/css/site.css" />
+  <link rel="stylesheet" href="assets/css/timer.css" />
 </head>
 
 <body>
@@ -131,46 +132,58 @@
           </p>
         </div>
 
-        <div class="grid">
-          <article class="card reveal">
-            <div class="card__top">
-              <span class="tag">Project</span>
-              <span class="tag tag--muted">Web</span>
-            </div>
-            <h3 class="card__title">Clarechen.com.au refresh</h3>
-            <p class="card__text">
-              A modern hero-first layout: confident, minimal, and easy to expand.
-            </p>
-            <div class="card__actions">
-              <a class="link" href="#" aria-label="Open project">View details</a>
-            </div>
-          </article>
+        <div class="grid grid--single">
+          <article class="card card--timer reveal">
+            <div class="timer">
+              <div class="timer__header">
+                <div>
+                  <div class="timer__title" id="timerTitle">SINCE</div>
+                  <div class="timer__subtitle" id="timerSubtitle">Loading…</div>
+                </div>
 
-          <article class="card reveal">
-            <div class="card__top">
-              <span class="tag">Case study</span>
-              <span class="tag tag--muted">Process</span>
-            </div>
-            <h3 class="card__title">Systems that scale</h3>
-            <p class="card__text">
-              Templates and workflows that reduce manual effort and improve consistency.
-            </p>
-            <div class="card__actions">
-              <a class="link" href="#" aria-label="Open case study">Read more</a>
-            </div>
-          </article>
+                <div class="timer__status">
+                  <div class="timer__clock" id="timerClock">--:--:--</div>
+                  <div class="timer__mode" id="timerMode">LIVE</div>
+                </div>
+              </div>
 
-          <article class="card reveal">
-            <div class="card__top">
-              <span class="tag">Writing</span>
-              <span class="tag tag--muted">Notes</span>
-            </div>
-            <h3 class="card__title">Clear thinking</h3>
-            <p class="card__text">
-              Short writing on decisions, delivery, and building calm momentum.
-            </p>
-            <div class="card__actions">
-              <a class="link" href="#writing">Go to writing</a>
+              <div class="timer__grid" aria-label="timer blocks">
+                <div class="timer__block">
+                  <div class="timer__label">YEARS</div>
+                  <div class="timer__value" id="timerYears">0</div>
+                </div>
+                <div class="timer__block">
+                  <div class="timer__label">DAYS</div>
+                  <div class="timer__value" id="timerDays">0</div>
+                </div>
+                <div class="timer__block">
+                  <div class="timer__label">HRS</div>
+                  <div class="timer__value" id="timerHours">00</div>
+                </div>
+                <div class="timer__block">
+                  <div class="timer__label">MIN</div>
+                  <div class="timer__value" id="timerMins">00</div>
+                </div>
+                <div class="timer__block">
+                  <div class="timer__label">SEC</div>
+                  <div class="timer__value" id="timerSecs">00</div>
+                </div>
+              </div>
+
+              <div class="timer__meta">
+                <div class="timer__pill">
+                  <span class="timer__dot" id="timerDot"></span>
+                  <span id="timerModeText">—</span>
+                </div>
+
+                <div>
+                  total days: <span id="timerTotalDays" style="color:rgba(255,255,255,.9)">0</span>
+                </div>
+              </div>
+
+              <div class="timer__hint">
+                All time is precious. Keep going.
+              </div>
             </div>
           </article>
         </div>
@@ -291,5 +304,6 @@
   </footer>
 
   <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/timer.js" defer></script>
 </body>
 </html>
