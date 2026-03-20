@@ -7,8 +7,6 @@ jotformId: "260778160100853"
 description: "Join us on Clare's 100th day"
 ---
 
-# Welcome to the World Party
-
 ## About This Event
 
 You're invited to celebrate a special milestone! This is an intimate gathering to welcome and celebrate the arrival and journey.
