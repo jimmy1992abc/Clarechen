@@ -375,6 +375,12 @@ img{max-width:100%; display:block}
   gap: 14px;
   margin-top: 22px;
 }
+.grid:has(> :only-child) {
+  grid-template-columns: 1fr;
+}
+.grid:has(> :nth-last-child(n+2):nth-child(-n+2)) {
+  grid-template-columns: repeat(2, minmax(0,1fr));
+}
 .card{
   background: rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.10);
@@ -405,6 +411,16 @@ img{max-width:100%; display:block}
 }
 .card__title{margin:0; font-size:18px}
 .card__text{margin:10px 0 0; color: var(--muted); line-height:1.6}
+.card__date{
+  margin:16px 0 0;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  color: var(--accent);
+  font-weight:600;
+}
+.card__date--icon{opacity:.8}
 .card__actions{margin-top:14px}
 .link{
   color: rgba(234,240,255,.9);

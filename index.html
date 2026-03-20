@@ -176,48 +176,8 @@
           </p>
         </div>
 
-         <div class="grid">
-          <article class="card reveal">
-            <div class="card__top">
-              <span class="tag">Project</span>
-              <span class="tag tag--muted">Web</span>
-            </div>
-            <h3 class="card__title">Clarechen.com.au refresh</h3>
-            <p class="card__text">
-              A modern hero-first layout: confident, minimal, and easy to expand.
-            </p>
-            <div class="card__actions">
-              <a class="link" href="#" aria-label="Open project">View details</a>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="card__top">
-              <span class="tag">Case study</span>
-              <span class="tag tag--muted">Process</span>
-            </div>
-            <h3 class="card__title">Systems that scale</h3>
-            <p class="card__text">
-              Templates and workflows that reduce manual effort and improve consistency.
-            </p>
-            <div class="card__actions">
-              <a class="link" href="#" aria-label="Open case study">Read more</a>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="card__top">
-              <span class="tag">Writing</span>
-              <span class="tag tag--muted">Notes</span>
-            </div>
-            <h3 class="card__title">Clear thinking</h3>
-            <p class="card__text">
-              Short writing on decisions, delivery, and building calm momentum.
-            </p>
-            <div class="card__actions">
-              <a class="link" href="#writing">Go to writing</a>
-            </div>
-          </article>
+         <div class="grid" id="eventCardsContainer">
+          <p style="text-align: center; color: var(--muted); grid-column: 1/-1; padding: 40px 0;">Loading events...</p>
         </div>
       </div>
     </section>
@@ -337,5 +297,14 @@
 
   <script src="assets/js/site.js" defer></script>
   <script src="assets/js/timer.js" defer></script>
+  <script src="assets/js/events.js" defer></script>
+  <script defer>
+    // Load events when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderEventCards);
+    } else {
+      renderEventCards();
+    }
+  </script>
 </body>
 </html>
