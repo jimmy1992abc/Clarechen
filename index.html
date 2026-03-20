@@ -298,11 +298,16 @@
   <script src="assets/js/site.js" defer></script>
   <script src="assets/js/timer.js" defer></script>
   <script src="assets/js/events.js" defer></script>
-  <script defer>
-    // Load events when DOM is ready
-    async function initEvents() {
+  <script>
+    // Wait for events.js to load, then initialize
+    function initEvents() {
+      if (typeof renderEventCards === 'undefined') {
+        // renderEventCards not ready yet, try again soon
+        setTimeout(initEvents, 100);
+        return;
+      }
       try {
-        await renderEventCards();
+        renderEventCards();
       } catch (error) {
         console.error('Failed to render event cards:', error);
         const container = document.getElementById('eventCardsContainer');

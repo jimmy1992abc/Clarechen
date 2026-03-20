@@ -99,10 +99,6 @@ async function loadPublishedEvents() {
     return [];
   }
 }
-    console.error('Error loading events:', error);
-    return [];
-  }
-}
 
 function formatDateLong(dateString) {
   const date = new Date(dateString + 'T00:00:00');
