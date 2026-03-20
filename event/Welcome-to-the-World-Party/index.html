@@ -291,8 +291,8 @@
           return;
         }
 
-        // Fetch event markdown from /event/_events/{slug}.md
-        const mdPath = `/event/_events/${slug}.md`;
+        // Fetch event markdown from same folder
+        const mdPath = `./${slug}.md`;
         console.log('[Event Template] Fetching:', mdPath);
         
         const response = await fetch(mdPath);

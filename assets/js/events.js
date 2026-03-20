@@ -94,9 +94,9 @@ async function loadPublishedEvents() {
 
     const events = [];
 
-    // Load each active event from /event/_events/{slug}.md
+    // Load each active event from event/{slug}/{slug}.md
     for (const slug of activeEventSlugs) {
-      const eventPath = `event/_events/${slug}.md`;
+      const eventPath = `event/${slug}/${slug}.md`;
       console.log(`[Events] Loading event: ${eventPath}`);
       const event = await parseMarkdownFile(eventPath);
       
