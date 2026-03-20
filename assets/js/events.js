@@ -5,19 +5,28 @@
 
 async function parseMarkdownFile(url) {
   try {
+    console.log(`[Events] Fetching: ${url}`);
     const response = await fetch(url);
+    
+    if (!response.ok) {
+      console.error(`[Events] Fetch failed for ${url}: ${response.status} ${response.statusText}`);
+      return null;
+    }
+
     const text = await response.text();
+    console.log(`[Events] Fetched content length: ${text.length} chars`);
 
     // Extract frontmatter
     const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
     const match = text.match(frontmatterRegex);
 
     if (!match) {
-      console.warn(`No frontmatter found in ${url}`);
+      console.warn(`[Events] No frontmatter found in ${url}`);
       return null;
     }
 
     const [, frontmatterStr, content] = match;
+    console.log(`[Events] Frontmatter found, parsing...`);
 
     // Parse YAML-like frontmatter (simple parser for key: value pairs)
     const frontmatter = {};
@@ -34,19 +43,23 @@ async function parseMarkdownFile(url) {
       }
     });
 
+    console.log(`[Events] Parsed frontmatter:`, frontmatter);
+
     return {
       frontmatter,
       content,
       slug: url.split('/').pop().replace('.md', '')
     };
   } catch (error) {
-    console.error(`Error parsing ${url}:`, error);
+    console.error(`[Events] Error parsing ${url}:`, error);
     return null;
   }
 }
 
 async function loadPublishedEvents() {
   try {
+    console.log('[Events] Starting to load published events...');
+    
     // Fetch the list of events - you'll need to maintain this list
     const eventFiles = [
       'birthday-celebration.md',
@@ -57,20 +70,32 @@ async function loadPublishedEvents() {
     const events = [];
 
     for (const file of eventFiles) {
-      // Use relative path from the site root
-      const eventPath = `./event/events/${file}`;
+      // Use relative path from the site root (without leading ./)
+      const eventPath = `event/events/${file}`;
+      console.log(`[Events] Loading event file: ${eventPath}`);
       const event = await parseMarkdownFile(eventPath);
-      if (event && event.frontmatter.published === true) {
-        events.push(event);
+      
+      if (event) {
+        console.log(`[Events] Event parsed. Published: ${event.frontmatter.published}`);
+        if (event.frontmatter.published === true) {
+          console.log(`[Events] Event IS published, adding to list`);
+          events.push(event);
+        } else {
+          console.log(`[Events] Event NOT published, skipping`);
+        }
+      } else {
+        console.log(`[Events] Failed to parse event from ${eventPath}`);
       }
     }
+
+    console.log(`[Events] Found ${events.length} published events`);
 
     // Sort by date (most recent first)
     events.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 
     return events;
   } catch (error) {
-    console.error('Error loading published events:', error);
+    console.error('[Events] Error loading published events:', error);
     return [];
   }
 }
@@ -116,22 +141,29 @@ function createEventCard(event) {
 async function renderEventCards() {
   const container = document.getElementById('eventCardsContainer');
   if (!container) {
-    console.warn('Event cards container not found');
+    console.warn('[Events] Event cards container not found');
     return;
   }
 
   try {
+    console.log('[Events] Starting to render event cards...');
     const events = await loadPublishedEvents();
+    console.log(`[Events] Got ${events.length} events to render`);
 
     if (events.length === 0) {
+      console.log('[Events] No published events found');
       container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--muted);">No upcoming events at the moment. Check back soon!</p>';
       return;
     }
 
-    container.innerHTML = events.map(event => createEventCard(event)).join('');
+    const html = events.map(event => createEventCard(event)).join('');
+    console.log(`[Events] Generated HTML for ${events.length} cards`);
+    container.innerHTML = html;
 
     // Manually set up reveal observer for dynamically added elements
     const revealEls = Array.from(container.querySelectorAll(".reveal"));
+    console.log(`[Events] Setting up reveal animations for ${revealEls.length} elements`);
+    
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) e.target.classList.add("is-visible");
@@ -139,8 +171,9 @@ async function renderEventCards() {
     }, { threshold: 0.12 });
 
     revealEls.forEach(el => io.observe(el));
+    console.log('[Events] Event cards rendered successfully');
   } catch (error) {
-    console.error('Error rendering event cards:', error);
+    console.error('[Events] Error rendering event cards:', error);
     container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--muted);">Error loading events.</p>';
   }
 }
