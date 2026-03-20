@@ -5,7 +5,7 @@
 
 .card--timer {
   padding: 28px;
-  min-height: 460px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
