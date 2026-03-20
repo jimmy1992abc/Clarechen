@@ -58,37 +58,50 @@ async function parseMarkdownFile(url) {
 
 async function loadPublishedEvents() {
   try {
-    console.log('[Events] Starting to load published events...');
+    console.log('[Events] Starting to load published events from master index...');
     
-    // Fetch the list of events - you'll need to maintain this list
-    const eventFiles = [
-      'birthday-celebration.md',
-      'design-workshop.md'
-      // Add more event files here as they're created
-    ];
+    // Read the master index file (/event/index.md) to get the list of active events
+    const indexEvent = await parseMarkdownFile('event/index.md');
+    
+    if (!indexEvent) {
+      console.error('[Events] Failed to load master index /event/index.md');
+      return [];
+    }
+
+    // Extract activeEvents from the frontmatter
+    const activeEventsValue = indexEvent.frontmatter.activeEvents;
+    
+    console.log('[Events] Raw activeEvents value:', activeEventsValue);
+
+    // Parse the YAML array format (e.g., "- event1\n  - event2")
+    let activeEventSlugs = [];
+    if (typeof activeEventsValue === 'string') {
+      activeEventSlugs = activeEventsValue
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.startsWith('-'))
+        .map(line => line.replace(/^-\s*/, '').trim());
+    }
+
+    console.log('[Events] Parsed active event slugs:', activeEventSlugs);
 
     const events = [];
 
-    for (const file of eventFiles) {
-      // Use relative path from the site root (without leading ./)
-      const eventPath = `event/events/${file}`;
-      console.log(`[Events] Loading event file: ${eventPath}`);
+    // Load each active event
+    for (const slug of activeEventSlugs) {
+      const eventPath = `event/events/${slug}.md`;
+      console.log(`[Events] Loading event: ${eventPath}`);
       const event = await parseMarkdownFile(eventPath);
       
       if (event) {
-        console.log(`[Events] Event parsed. Published: ${event.frontmatter.published}`);
-        if (event.frontmatter.published === true) {
-          console.log(`[Events] Event IS published, adding to list`);
-          events.push(event);
-        } else {
-          console.log(`[Events] Event NOT published, skipping`);
-        }
+        console.log(`[Events] Event loaded: ${event.frontmatter.title}`);
+        events.push(event);
       } else {
-        console.log(`[Events] Failed to parse event from ${eventPath}`);
+        console.warn(`[Events] Failed to load event: ${slug}`);
       }
     }
 
-    console.log(`[Events] Found ${events.length} published events`);
+    console.log(`[Events] Found ${events.length} active events`);
 
     // Sort by date (most recent first)
     events.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
