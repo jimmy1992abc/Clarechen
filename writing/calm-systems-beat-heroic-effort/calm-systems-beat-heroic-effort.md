@@ -28,7 +28,7 @@ If this sounds familiar, the fix is not another pep talk. The fix is design.
 
 Use this three-step loop for any recurring work.
 
-## 1) Capture where friction happens
+## 1 Capture where friction happens
 
 For one week, write down every point where people hesitate, ask for context, or redo work.
 
@@ -36,7 +36,7 @@ Do not judge. Just collect evidence.
 
 By the end of the week, you should have a small list of repeated blockers. Usually there are fewer than ten that matter.
 
-## 2) Standardize the minimum useful path
+## 2 Standardize the minimum useful path
 
 For each blocker, define one default path.
 
@@ -46,7 +46,7 @@ For each blocker, define one default path.
 
 Do not over-engineer. A tiny consistent process is better than a perfect process nobody follows.
 
-## 3) Trigger the system automatically
+## 3 Trigger the system automatically
 
 Good systems fire without reminders.
 

@@ -4,17 +4,45 @@
   const navToggle = document.getElementById("navToggle");
   const navMenu = document.getElementById("navMenu");
   const bar = document.getElementById("scrollbarBar");
+  const path = window.location.pathname;
+  const hash = window.location.hash;
+  const isHomePage = path === "/" || path === "/index.html";
+  const introSeenStorageKey = "clareIntroSeen";
+
+  const hasSeenIntro = (() => {
+    try {
+      return localStorage.getItem(introSeenStorageKey) === "1";
+    } catch {
+      return false;
+    }
+  })();
 
   // year
   if (year) year.textContent = new Date().getFullYear();
 
-  // intro fade-out
- window.addEventListener("load", () => {
+  // intro fade-out (homepage only)
+  window.addEventListener("load", () => {
   // Keep intro visible until first interaction
-  if (!intro) return;
+  if (!intro || !isHomePage) return;
+
+  // Skip intro for section deep-links or repeat visits.
+  if (hash || hasSeenIntro) {
+    intro.classList.add("is-hidden");
+    try {
+      localStorage.setItem(introSeenStorageKey, "1");
+    } catch {
+      // Ignore storage errors (private mode / blocked storage).
+    }
+    return;
+  }
 
   const hideIntro = () => {
     intro.classList.add("is-hidden");
+    try {
+      localStorage.setItem(introSeenStorageKey, "1");
+    } catch {
+      // Ignore storage errors (private mode / blocked storage).
+    }
 
     // Remove listeners after dismissing (avoid extra work)
     window.removeEventListener("mousemove", onFirstInteraction);
@@ -37,8 +65,7 @@
   window.addEventListener("keydown", onFirstInteraction, { once: true });
   window.addEventListener("touchstart", onFirstInteraction, { once: true, passive: true });
   window.addEventListener("scroll", onFirstInteraction, { once: true, passive: true });
-});
-``
+  });
 
   // mobile nav
   if (navToggle && navMenu) {
@@ -76,4 +103,3 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 })();
-``

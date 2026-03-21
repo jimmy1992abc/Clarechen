@@ -56,7 +56,8 @@
 
   <script>
     function parseFrontmatter(text) {
-      const m = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+      const normalized = text.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
+      const m = normalized.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
       if (!m) return null;
       const frontmatter = {};
       m[1].split('\n').forEach((line) => {
@@ -116,7 +117,10 @@
     }
 
     async function loadArticle() {
-      const slug = window.location.pathname.split('/').filter(Boolean).slice(-1)[0] || 'template';
+      const parts = window.location.pathname.split('/').filter(Boolean);
+      const tail = parts[parts.length - 1] || '';
+      const slugPart = tail === 'index.html' ? (parts[parts.length - 2] || 'template') : tail;
+      const slug = slugPart.replace(/\.html$/, '') || 'template';
       const response = await fetch(`./${slug}.md`);
       if (!response.ok) {
         document.getElementById('articleTitle').textContent = 'Article not found';

@@ -94,14 +94,16 @@ async function loadPublishedWriting() {
 
 function createPostCard(post) {
   const { slug, frontmatter, content } = post;
-  const year = frontmatter.date ? new Date(frontmatter.date).getFullYear() : "2026";
+  const dateStr = frontmatter.date 
+    ? new Date(frontmatter.date).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })
+    : "2026";
   const readTime = frontmatter.readTime || estimateReadTime(content);
   const summary = frontmatter.description || getFirstParagraph(content);
 
   return `
     <a class="post reveal" href="/writing/${slug}/">
       <div class="post__meta">
-        <span class="post__date">${year} · Note</span>
+        <span class="post__date">${dateStr} · Note</span>
         <span class="post__dot" aria-hidden="true"></span>
         <span class="post__read">${readTime}</span>
       </div>
