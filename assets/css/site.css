@@ -553,6 +553,41 @@ img{max-width:100%; display:block}
   display:grid;
   gap: 10px;
 }
+.form__row{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.form__caption{
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.form__captcha{
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0;
+  pointer-events: none;
+  transition: max-height .35s ease, opacity .25s ease, padding .25s ease;
+}
+.form__captcha.is-visible{
+  max-height: 220px;
+  opacity: 1;
+  padding: 10px 0 2px;
+  pointer-events: auto;
+}
+.form__captcha--attention .form__caption{
+  color: #ffd38a;
+}
+.form__honeypot{
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  opacity:0;
+  pointer-events:none;
+}
 .input{
   width:100%;
   border-radius: 14px;
@@ -628,4 +663,5 @@ img{max-width:100%; display:block}
   }
   .nav__menu.is-open{display:flex}
   .nav__link{padding: 12px 12px}
+  .form__row{grid-template-columns: 1fr}
 }

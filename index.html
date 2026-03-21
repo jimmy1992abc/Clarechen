@@ -54,9 +54,9 @@
         <div class="nav__menu" id="navMenu">
           <a class="nav__link" href="#about">About</a>
           <a class="nav__link" href="/event/event.html">Event</a>
-          <a class="nav__link" href="#writing">Writing</a>
+          <a class="nav__link" href="/writing/writing.html">Writing</a>
           <a class="nav__link" href="#contact">Contact</a>
-          <a class="btn btn--ghost" href="#contact">Let’s talk</a>
+          <a class="btn btn--ghost" href="mailto:clarechenxy26@gmail.com">Let’s talk</a>
         </div>
       </nav>
     </div>
@@ -193,26 +193,11 @@
           <p class="section__lead reveal">Short notes. Practical ideas. No fluff.</p>
         </div>
 
-        <div class="posts">
-          <a class="post reveal" href="#">
-            <div class="post__meta">
-              <span class="post__date">2026 · Note</span>
-              <span class="post__dot" aria-hidden="true"></span>
-              <span class="post__read">3 min read</span>
-            </div>
-            <h3 class="post__title">Calm systems beat heroic effort</h3>
-            <p class="post__text">A quick framework for removing friction from repeating work.</p>
-          </a>
-
-          <a class="post reveal" href="#">
-            <div class="post__meta">
-              <span class="post__date">2026 · Note</span>
-              <span class="post__dot" aria-hidden="true"></span>
-              <span class="post__read">4 min read</span>
-            </div>
-            <h3 class="post__title">Designing a homepage that feels premium</h3>
-            <p class="post__text">Why typography + hero composition makes the whole site feel intentional.</p>
-          </a>
+        <div class="posts" id="writingPostsContainer">
+          <p style="text-align: center; color: var(--muted); padding: 20px 0;">Loading writing...</p>
+        </div>
+        <div style="margin-top: 16px; text-align: center;">
+          <a class="link" href="/writing/writing.html">More writing</a>
         </div>
       </div>
     </section>
@@ -225,18 +210,18 @@
           <div class="split__left reveal">
             <h2 class="section__title">About</h2>
             <p class="section__lead">
-              This area is meant to stay short — no giant white text blocks.
-              A quick, confident snapshot and a few “principles”.
+              I’m only just beginning—tiny hands, curious eyes, and a whole world waiting to be discovered.
+              This little space grows with me, holding moments, thoughts, and stories from each step of my journey.
             </p>
             <p class="muted">
-              Replace this with a 3–5 sentence bio: what you do, who you help, what you’re curious about.
+              If you’re here, you’re part of it too—watching me become who I’m meant to be.
             </p>
 
             <div class="chips">
-              <span class="chip">Problem framing</span>
-              <span class="chip">Practical automation</span>
-              <span class="chip">Clean documentation</span>
-              <span class="chip">Quality delivery</span>
+              <span class="chip">Growing up</span>
+              <span class="chip">Little Moments</span>
+              <span class="chip">A story in time</span>
+              <span class="chip">Be Clare</span>
             </div>
           </div>
 
@@ -244,12 +229,12 @@
             <div class="panel">
               <h3 class="panel__title">Principles</h3>
               <ul class="list">
-                <li><span class="tick" aria-hidden="true"></span>Ship something useful, then refine.</li>
-                <li><span class="tick" aria-hidden="true"></span>Less noise, more signal.</li>
-                <li><span class="tick" aria-hidden="true"></span>Design for humans first.</li>
-                <li><span class="tick" aria-hidden="true"></span>Make quality the default.</li>
+                <li><span class="tick" aria-hidden="true"></span>Choose right over easy.</li>
+                <li><span class="tick" aria-hidden="true"></span>Stay curious, stay kind.</li>
+                <li><span class="tick" aria-hidden="true"></span>Truth over approval.</li>
+                <li><span class="tick" aria-hidden="true"></span>Begin again, always.</li>
               </ul>
-              <a class="btn btn--soft btn--full" href="#contact">Work with me</a>
+              <a class="btn btn--soft btn--full" href="mailto:clarechenxy26@gmail.com">Talk with me</a>
             </div>
           </div>
         </div>
@@ -264,22 +249,40 @@
           <p class="cta__lead">Send a quick message — I’ll reply with next steps.</p>
         </div>
 
-        <form class="form reveal" action="mailto:your@email.com" method="post" enctype="text/plain">
-          <label class="sr-only" for="name">Name</label>
-          <input class="input" id="name" name="name" placeholder="Your name" autocomplete="name" />
+        <form class="form reveal" id="contactForm" action="https://submit.jotform.com/submit/260793218969069" method="post" accept-charset="utf-8" autocomplete="on">
+          <input type="hidden" name="formID" value="260793218969069" />
+          <input type="hidden" name="simple_spc" value="260793218969069-260793218969069" />
+          <input type="text" name="website" value="" tabindex="-1" autocomplete="off" class="form__honeypot" aria-hidden="true" />
+
+          <div class="form__row">
+            <div>
+              <label class="sr-only" for="first-name">First name</label>
+              <input class="input" id="first-name" name="q4_name[first]" placeholder="First name" autocomplete="given-name" />
+            </div>
+            <div>
+              <label class="sr-only" for="last-name">Last name</label>
+              <input class="input" id="last-name" name="q4_name[last]" placeholder="Last name" autocomplete="family-name" />
+            </div>
+          </div>
 
           <label class="sr-only" for="email">Email</label>
-          <input class="input" id="email" name="email" placeholder="Email" autocomplete="email" />
+          <input class="input" id="email" name="q5_email" type="email" placeholder="Email" autocomplete="email" />
 
           <label class="sr-only" for="message">Message</label>
-          <textarea class="input input--area" id="message" name="message" placeholder="Let’s hear your thoughts"></textarea>
+          <textarea class="input input--area" id="message" name="q6_typeA" placeholder="Let’s hear your thoughts"></textarea>
+
+          <div class="form__captcha" id="contactCaptcha" aria-hidden="true">
+            <p class="form__caption">Please verify that you are human</p>
+            <div id="hcaptcha_input_7" class="h-captcha" data-sitekey="772f4a50-7161-425e-8cd5-4d7e361ab765" data-callback="hcaptchaCallbackinput_7" data-expired-callback="hcaptchaExpiredCallbackinput_7"></div>
+            <input type="hidden" id="input_7" name="hcaptcha_visible" required />
+          </div>
 
           <button class="btn btn--primary btn--full" type="submit">Send</button>
 
           <div class="form__links">
             <a class="link link--muted" href="https://github.com/jimmy1992abc" target="_blank" rel="noreferrer">GitHub</a>
             <span class="dot" aria-hidden="true"></span>
-            <a class="link link--muted" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="link link--muted" href="http://www.clarechen.com.au/" target="_blank" rel="noreferrer">Blog</a>
           </div>
         </form>
       </div>
@@ -301,6 +304,8 @@
   <script src="assets/js/site.js" defer></script>
   <script src="assets/js/timer.js" defer></script>
   <script src="assets/js/events.js" defer></script>
+  <script src="assets/js/writing.js" defer></script>
+  <script src="https://hcaptcha.com/1/api.js" async defer></script>
   <script>
     // Wait for events.js to load, then initialize
     function initEvents() {
@@ -324,6 +329,85 @@
       document.addEventListener('DOMContentLoaded', initEvents);
     } else {
       initEvents();
+    }
+
+    function initWriting() {
+      if (typeof renderHomepageWriting === 'undefined') {
+        setTimeout(initWriting, 100);
+        return;
+      }
+      renderHomepageWriting();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initWriting);
+    } else {
+      initWriting();
+    }
+
+    function initContactForm() {
+      const form = document.getElementById('contactForm');
+      const captcha = document.getElementById('contactCaptcha');
+      const captchaInput = document.getElementById('input_7');
+
+      if (!form || !captcha || !captchaInput) {
+        return;
+      }
+
+      const revealCaptcha = () => {
+        if (captcha.classList.contains('is-visible')) {
+          return;
+        }
+
+        captcha.classList.add('is-visible');
+        captcha.setAttribute('aria-hidden', 'false');
+
+        setTimeout(() => {
+          captcha.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 120);
+      };
+
+      form.addEventListener('submit', (event) => {
+        if (!captcha.classList.contains('is-visible')) {
+          event.preventDefault();
+          revealCaptcha();
+          return;
+        }
+
+        if (!captchaInput.value) {
+          event.preventDefault();
+          revealCaptcha();
+          captcha.classList.add('form__captcha--attention');
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initContactForm);
+    } else {
+      initContactForm();
+    }
+
+    function hcaptchaCallbackinput_7() {
+      const captcha = document.getElementById('contactCaptcha');
+      const hiddenInput = document.getElementById('input_7');
+      if (hiddenInput) {
+        hiddenInput.value = '1';
+      }
+      if (captcha) {
+        captcha.classList.remove('form__captcha--attention');
+      }
+    }
+
+    function hcaptchaExpiredCallbackinput_7() {
+      const captcha = document.getElementById('contactCaptcha');
+      const hiddenInput = document.getElementById('input_7');
+      if (hiddenInput) {
+        hiddenInput.value = '';
+      }
+      if (captcha) {
+        captcha.classList.add('form__captcha--attention');
+      }
     }
   </script>
 </body>
