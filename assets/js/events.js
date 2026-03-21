@@ -129,8 +129,8 @@ function createEventCard(event) {
   const { frontmatter, slug } = event;
   const dateFormatted = formatDateLong(frontmatter.date);
   
-  // Determine tag based on event type (default to "Party")
-  const tags = frontmatter.tags ? (Array.isArray(frontmatter.tags) ? frontmatter.tags : [frontmatter.tags]) : ['Party'];
+  // Determine tag based on event type (default to "Event")
+  const tags = frontmatter.tags ? (Array.isArray(frontmatter.tags) ? frontmatter.tags : [frontmatter.tags]) : ['Event'];
   const tagHtml = tags.map((tag, idx) => {
     const className = idx > 0 ? 'tag tag--muted' : 'tag';
     return `<span class="${className}">${tag}</span>`;
@@ -166,16 +166,17 @@ async function renderEventCards() {
   try {
     console.log('[Events] Starting to render event cards...');
     const events = await loadPublishedEvents();
-    console.log(`[Events] Got ${events.length} events to render`);
+    const homepageEvents = events.slice(0, 2);
+    console.log(`[Events] Got ${homepageEvents.length} events to render`);
 
-    if (events.length === 0) {
+    if (homepageEvents.length === 0) {
       console.log('[Events] No published events found');
       container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--muted);">No upcoming events at the moment. Check back soon!</p>';
       return;
     }
 
-    const html = events.map(event => createEventCard(event)).join('');
-    console.log(`[Events] Generated HTML for ${events.length} cards`);
+    const html = homepageEvents.map(event => createEventCard(event)).join('');
+    console.log(`[Events] Generated HTML for ${homepageEvents.length} cards`);
     container.innerHTML = html;
 
     // Manually set up reveal observer for dynamically added elements

@@ -1,6 +1,6 @@
 ---
 title: "Event Title Here"
-published: false
+type: "Party"
 date: "2026-04-15"
 time: "7:00 PM"
 location: "Venue Name, City"
@@ -8,17 +8,9 @@ jotformId: "260778160100853"
 description: "Short description for the card display"
 ---
 
-# Event Title
-
 ## About This Event
 
 Add a longer description here about what the event is about, who should attend, and what to expect.
-
-## Details
-
-- **Date:** April 15, 2026
-- **Time:** 7:00 PM
-- **Location:** Venue Name, City
 
 ## What to Expect
 
