@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>Events — Clare Chen</title>
+  <meta name="description" content="Upcoming events from Clare Chen." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Events — Clare Chen" />
+  <meta property="og:description" content="Upcoming events from Clare Chen." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/site.css" />
+
+  <style>
+    /* ── Page hero ── */
+    .events-hero {
+      padding: 72px 0 48px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .events-hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .events-hero__title {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 4.5vw, 54px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .events-hero__lead {
+      margin: 14px 0 0;
+      color: var(--muted);
+      max-width: 58ch;
+      line-height: 1.65;
+    }
+
+    /* ── Event row card ── */
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .event-row {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: center;
+      gap: 28px;
+      padding: 24px 28px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,.2);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .event-row:hover {
+      transform: translateY(-3px);
+      border-color: rgba(118,169,255,.28);
+      background: rgba(255,255,255,.065);
+    }
+
+    /* Date block */
+    .event-row__date {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .event-row__day {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .event-row__month {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .event-row__year {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      opacity: .7;
+      margin-top: 2px;
+    }
+
+    /* Divider */
+    .event-row__divider {
+      width: 1px;
+      height: 56px;
+      background: rgba(255,255,255,.10);
+      flex-shrink: 0;
+      display: none; /* shown via grid gap */
+    }
+
+    /* Body */
+    .event-row__body {
+      min-width: 0;
+    }
+    .event-row__tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .event-row__title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .event-row__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .event-row__meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .event-row__desc {
+      margin: 10px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* CTA */
+    .event-row__cta {
+      flex-shrink: 0;
+    }
+    .event-row__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(118,169,255,.28);
+      background: rgba(118,169,255,.10);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background .2s ease, border-color .2s ease, transform .15s ease;
+    }
+    .event-row__btn:hover {
+      background: rgba(118,169,255,.18);
+      border-color: rgba(118,169,255,.45);
+      transform: translateX(2px);
+    }
+    .event-row__btn-arrow {
+      transition: transform .15s ease;
+    }
+    .event-row:hover .event-row__btn-arrow {
+      transform: translateX(3px);
+    }
+
+    /* Empty state */
+    .events-empty {
+      text-align: center;
+      padding: 72px 0;
+      color: var(--muted);
+    }
+    .events-empty__icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+    .events-empty__title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    /* Loading skeleton */
+    .event-skeleton {
+      height: 110px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { opacity: .5 }
+      50% { opacity: 1 }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .event-row {
+        grid-template-columns: 72px 1fr;
+        grid-template-rows: auto auto;
+        gap: 16px 16px;
+        padding: 18px 16px;
+      }
+      .event-row__cta {
+        grid-column: 1 / -1;
+      }
+      .event-row__btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .event-row__title {
+        font-size: 17px;
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Scroll progress -->
+  <div class="scrollbar" aria-hidden="true">
+    <div class="scrollbar__bar" id="scrollbarBar"></div>
+  </div>
+
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a class="brand" href="/" aria-label="Home">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">Clare Chen</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+          <span class="nav__toggleLines" aria-hidden="true"></span>
+          <span class="sr-only">Open menu</span>
+        </button>
+
+        <div class="nav__menu" id="navMenu">
+          <a class="nav__link" href="/#about">About</a>
+          <a class="nav__link nav__link--active" href="/event/event.html">Event</a>
+          <a class="nav__link" href="/#writing">Writing</a>
+          <a class="nav__link" href="/#contact">Contact</a>
+          <a class="btn btn--ghost" href="/#contact">Let's talk</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="events-hero">
+      <div class="container">
+        <p class="events-hero__eyebrow reveal">
+          <span class="pill">Upcoming</span>
+        </p>
+        <h1 class="events-hero__title reveal">Events</h1>
+        <p class="events-hero__lead reveal">
+          Come along, celebrate milestones, and be part of the journey.
+        </p>
+      </div>
+    </section>
+
+    <!-- Event list -->
+    <section class="section">
+      <div class="container">
+        <div id="eventListContainer">
+          <!-- Loading skeletons -->
+          <div class="event-list" aria-busy="true" aria-label="Loading events">
+            <div class="event-skeleton"></div>
+            <div class="event-skeleton" style="opacity:.7"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__left">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span>© <span id="year"></span> Clarechen.com.au</span>
+      </div>
+      <div class="footer__right">
+        <a class="link link--muted" href="#">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/site.js" defer></script>
+  <script src="active.js"></script>
+  <script src="../assets/js/events.js" defer></script>
+
+  <script>
+    // ── Render event rows ──────────────────────────────────────────────
+    function parseDateParts(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return {
+        day:   d.toLocaleDateString('en-AU', { day: 'numeric' }),
+        month: d.toLocaleDateString('en-AU', { month: 'short' }).toUpperCase(),
+        year:  d.getFullYear(),
+        full:  d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
+      };
+    }
+
+    function createEventRow(event) {
+      const { frontmatter, slug } = event;
+      const dp = parseDateParts(frontmatter.date);
+      const tags = frontmatter.tags
+        ? (Array.isArray(frontmatter.tags) ? frontmatter.tags : [frontmatter.tags])
+        : ['Event'];
+
+      const tagHtml = tags.map((t, i) =>
+        `<span class="tag${i > 0 ? ' tag--muted' : ''}">${t}</span>`
+      ).join('');
+
+      const metaItems = [
+        frontmatter.time     ? `<span class="event-row__meta-item">🕐 ${frontmatter.time}</span>` : '',
+        frontmatter.location ? `<span class="event-row__meta-item">📍 ${frontmatter.location}</span>` : '',
+      ].filter(Boolean).join('');
+
+      return `
+        <article class="event-row reveal" role="article">
+          <div class="event-row__date">
+            <span class="event-row__day">${dp.day}</span>
+            <span class="event-row__month">${dp.month}</span>
+            <span class="event-row__year">${dp.year}</span>
+          </div>
+
+          <div class="event-row__body">
+            <div class="event-row__tags">${tagHtml}</div>
+            <h2 class="event-row__title">${frontmatter.title}</h2>
+            <div class="event-row__meta">${metaItems}</div>
+            ${frontmatter.description
+              ? `<p class="event-row__desc">${frontmatter.description}</p>`
+              : ''}
+          </div>
+
+          <div class="event-row__cta">
+            <a class="event-row__btn" href="/event/${slug}/" aria-label="View details for ${frontmatter.title}">
+              View details
+              <span class="event-row__btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    async function renderEventList() {
+      const container = document.getElementById('eventListContainer');
+      if (!container) return;
+
+      // Wait for events.js to be ready
+      let attempts = 0;
+      while (typeof loadPublishedEvents === 'undefined' && attempts < 50) {
+        await new Promise(r => setTimeout(r, 100));
+        attempts++;
+      }
+
+      const events = typeof loadPublishedEvents === 'function'
+        ? await loadPublishedEvents()
+        : [];
+
+      if (events.length === 0) {
+        container.innerHTML = `
+          <div class="events-empty">
+            <div class="events-empty__icon" aria-hidden="true">📭</div>
+            <h2 class="events-empty__title">No upcoming events</h2>
+            <p>Nothing scheduled right now — check back soon.</p>
+          </div>`;
+        return;
+      }
+
+      const html = `<div class="event-list">${events.map(createEventRow).join('')}</div>`;
+      container.innerHTML = html;
+
+      // Trigger reveal animations
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+      }, { threshold: 0.08 });
+      container.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderEventList);
+    } else {
+      renderEventList();
+    }
+  </script>
+
+</body>
+</html>

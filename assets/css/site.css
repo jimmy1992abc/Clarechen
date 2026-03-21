@@ -160,6 +160,11 @@ img{max-width:100%; display:block}
   color: var(--text);
   background: rgba(255,255,255,.06);
 }
+.nav__link--active{
+  color: var(--text);
+  background: rgba(118,169,255,.10);
+  border: 1px solid rgba(118,169,255,.18);
+}
 
 /* ====== Buttons ====== */
 .btn{
