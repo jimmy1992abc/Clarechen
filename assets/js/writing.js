@@ -1,6 +1,6 @@
 /**
  * Writing loader
- * Loads published writing posts and renders cards on index.html and writing/writing.html.
+ * Loads published writing posts and renders cards on index.html and writing/index.html.
  */
 
 const WRITING_SLUGS = [
