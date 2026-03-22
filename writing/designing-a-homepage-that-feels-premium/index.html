@@ -55,6 +55,8 @@
   </main>
 
   <script>
+    const WRITING_REMOTE_BASE = 'https://raw.githubusercontent.com/jimmy1992abc/Clarechen.com.au/main/writing';
+
     function parseFrontmatter(text) {
       const normalized = text.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
       const m = normalized.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -121,13 +123,29 @@
       const tail = parts[parts.length - 1] || '';
       const slugPart = tail === 'index.html' ? (parts[parts.length - 2] || 'template') : tail;
       const slug = slugPart.replace(/\.html$/, '') || 'template';
-      const response = await fetch(`./${slug}.md`);
-      if (!response.ok) {
+      const candidates = [
+        `./${slug}.md`,
+        `${WRITING_REMOTE_BASE}/${slug}/${slug}.md`
+      ];
+
+      let markdownText = '';
+      for (const url of candidates) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) continue;
+          markdownText = await response.text();
+          break;
+        } catch {
+          // Continue to next candidate source.
+        }
+      }
+
+      if (!markdownText) {
         document.getElementById('articleTitle').textContent = 'Article not found';
         return;
       }
 
-      const parsed = parseFrontmatter(await response.text());
+      const parsed = parseFrontmatter(markdownText);
       if (!parsed) {
         document.getElementById('articleTitle').textContent = 'Invalid markdown format';
         return;
