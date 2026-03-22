@@ -6,19 +6,39 @@
   const bar = document.getElementById("scrollbarBar");
   const path = window.location.pathname;
   const hash = window.location.hash;
-  const isHomePage = path === "/" || path === "/index.html";
+  const isHomePage = /^\/(?:index\.html)?$/.test(path);
   const introSeenStorageKey = "clareIntroSeen";
 
   const hasSeenIntro = (() => {
     try {
-      return localStorage.getItem(introSeenStorageKey) === "1";
+      if (localStorage.getItem(introSeenStorageKey) === "1") return true;
     } catch {
-      return false;
+      // Ignore blocked storage and rely on cookie fallback.
     }
+
+    return document.cookie
+      .split(";")
+      .map((part) => part.trim())
+      .some((part) => part === `${introSeenStorageKey}=1`);
   })();
+
+  const markIntroSeen = () => {
+    try {
+      localStorage.setItem(introSeenStorageKey, "1");
+    } catch {
+      // Ignore storage errors (private mode / blocked storage).
+    }
+
+    document.cookie = `${introSeenStorageKey}=1; path=/; max-age=31536000; samesite=lax`;
+  };
 
   // year
   if (year) year.textContent = new Date().getFullYear();
+
+  // Hide immediately on repeat visits to avoid intro flash.
+  if (intro && isHomePage && (hash || hasSeenIntro)) {
+    intro.classList.add("is-hidden");
+  }
 
   // intro fade-out (homepage only)
   window.addEventListener("load", () => {
@@ -28,21 +48,13 @@
   // Skip intro for section deep-links or repeat visits.
   if (hash || hasSeenIntro) {
     intro.classList.add("is-hidden");
-    try {
-      localStorage.setItem(introSeenStorageKey, "1");
-    } catch {
-      // Ignore storage errors (private mode / blocked storage).
-    }
+    markIntroSeen();
     return;
   }
 
   const hideIntro = () => {
     intro.classList.add("is-hidden");
-    try {
-      localStorage.setItem(introSeenStorageKey, "1");
-    } catch {
-      // Ignore storage errors (private mode / blocked storage).
-    }
+    markIntroSeen();
 
     // Remove listeners after dismissing (avoid extra work)
     window.removeEventListener("mousemove", onFirstInteraction);
