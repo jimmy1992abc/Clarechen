@@ -118,7 +118,9 @@
 
     async function loadArticle() {
       const parts = window.location.pathname.split('/').filter(Boolean);
-      const slug = parts[parts.length - 1] || 'template';
+      const tail = parts[parts.length - 1] || '';
+      const slugPart = tail === 'index.html' ? (parts[parts.length - 2] || 'template') : tail;
+      const slug = slugPart.replace(/\.html$/, '') || 'template';
       const response = await fetch(`./${slug}.md`);
       if (!response.ok) {
         document.getElementById('articleTitle').textContent = 'Article not found';
