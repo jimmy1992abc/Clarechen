@@ -8,7 +8,7 @@ const WRITING_SLUGS = [
   "designing-a-homepage-that-feels-premium"
 ];
 
-const WRITING_REMOTE_BASE = "https://raw.githubusercontent.com/jimmy1992abc/Clarechen.com.au/main/writing";
+const WRITING_REMOTE_BASE = "https://raw.githubusercontent.com/jimmy1992abc/Clarechen/main/writing";
 
 async function parseMarkdownFile(url) {
   try {
