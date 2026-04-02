@@ -5,4 +5,3 @@ Add or remove a slug to show or hide that event on the homepage.
 
 Active events:
 - welcome-to-the-world-party
-- design-workshop
