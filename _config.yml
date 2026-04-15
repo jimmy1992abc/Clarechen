@@ -9,6 +9,7 @@ author:
 markdown: kramdown
 highlighter: rouge
 timezone: Australia/Sydney
+future: true
 
 # Plugins (all GitHub Pages whitelisted)
 plugins:
