@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  <div class="scrollbar" aria-hidden="true">
+    <div class="scrollbar__bar" id="scrollbarBar"></div>
+  </div>
+
+  {% include header.html %}
+
+  <main id="top">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</body>
+</html>

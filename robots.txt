@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://clarechen.com.au/sitemap.xml

@@ -1,0 +1,23 @@
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="Home">
+      <span class="brand__dot" aria-hidden="true"></span>
+      <span class="brand__text">Clare Chen</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+        <span class="nav__toggleLines" aria-hidden="true"></span>
+        <span class="sr-only">Open menu</span>
+      </button>
+
+      <div class="nav__menu" id="navMenu">
+        <a class="nav__link" href="{{ '/#about' | relative_url }}">About</a>
+        <a class="nav__link{% if page.url contains '/event' %} nav__link--active{% endif %}" href="{{ '/event/' | relative_url }}">Event</a>
+        <a class="nav__link{% if page.url contains '/writing' %} nav__link--active{% endif %}" href="{{ '/writing/' | relative_url }}">Writing</a>
+        <a class="nav__link" href="{{ '/#contact' | relative_url }}">Contact</a>
+        <a class="btn btn--ghost" href="mailto:clarechenxy26@gmail.com">Let's talk</a>
+      </div>
+    </nav>
+  </div>
+</header>

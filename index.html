@@ -1,415 +1,303 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b1220" />
-  <title>Clare Chen — Clarechen.com.au</title>
-  <meta name="description" content="A modern personal homepage for Clare Chen — projects, writing, and contact." />
+---
+layout: default
+title: "Clare Chen — Clarechen.com.au"
+description: "A modern personal homepage for Clare Chen — events, writing, and contact."
+image: /assets/img/hero.jpg
+permalink: /
+---
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Clare Chen — Clarechen.com.au" />
-  <meta property="og:description" content="Projects, writing, and contact." />
-  <meta property="og:type" content="website" />
+{% assign today = 'now' | date: '%Y-%m-%d' %}
+{% assign upcoming = site.events | where_exp: 'e', 'e.date >= site.time' | sort: 'date' %}
+{% assign recent_writing = site.writing | sort: 'date' | reverse %}
 
-  <!-- Fonts (Google Fonts) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Elegant headline + clean UI body -->
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&display=swap" rel="stylesheet" />
+<!-- Intro / Welcome Screen -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__inner">
+    <div class="intro__mark" aria-hidden="true"></div>
+    <p class="intro__eyebrow">Welcome to</p>
+    <h1 class="intro__title">Clare Chen</h1>
+    <p class="intro__sub">Ideas begin with Yuan, refined in clarity，made Clare.</p>
+  </div>
+</div>
 
-  <link rel="icon" href="assets/img/halo.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="assets/css/site.css" />
-  <link rel="stylesheet" href="assets/css/timer.css" />
-</head>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__overlay" aria-hidden="true"></div>
+  <div class="hero__halo" aria-hidden="true"></div>
 
-<body>
-  <!-- Intro / Welcome Screen -->
-  <div class="intro" id="intro" aria-hidden="true">
-    <div class="intro__inner">
-      <div class="intro__mark" aria-hidden="true"></div>
-      <p class="intro__eyebrow">Welcome to</p>
-      <h1 class="intro__title">Clare Chen</h1>
-      <p class="intro__sub">Ideas begin with Yuan, refined in clarity，made Clare.</p>
+  <div class="container hero__inner">
+    <p class="kicker reveal">
+      <span class="pill">A life in progress</span>
+      This is where my story begins.
+    </p>
+
+    <h1 class="hero__title reveal">
+      Driven by Clarity. Defined by <span class="accent">Clare</span>.
+    </h1>
+
+    <p class="hero__lead reveal">
+      Every second shapes who I become.<br>
+      <span class="muted">(Clarity begins here.)</span>
+    </p>
+
+    <div class="hero__actions reveal">
+      <a class="btn btn--primary" href="#event">Upcoming events</a>
+      <a class="btn btn--soft" href="#contact">Get in touch</a>
     </div>
-  </div>
 
-  <!-- Top progress indicator -->
-  <div class="scrollbar" aria-hidden="true">
-    <div class="scrollbar__bar" id="scrollbarBar"></div>
-  </div>
+    <div class="grid grid--single">
+      <article class="card card--timer reveal">
+        <div class="timer">
+          <div class="timer__header">
+            <div>
+              <div class="timer__title" id="timerTitle">SINCE</div>
+              <div class="timer__subtitle" id="timerSubtitle">Loading…</div>
+            </div>
+            <div class="timer__status">
+              <div class="timer__clock" id="timerClock">--:--:--</div>
+              <div class="timer__mode" id="timerMode">LIVE</div>
+            </div>
+          </div>
 
-  <header class="header" id="header">
-    <div class="container header__inner">
-      <a class="brand" href="#top" aria-label="Home">
-        <span class="brand__dot" aria-hidden="true"></span>
-        <span class="brand__text">Clare Chen</span>
+          <div class="timer__grid" aria-label="timer blocks">
+            <div class="timer__block"><div class="timer__label">YEARS</div><div class="timer__value" id="timerYears">0</div></div>
+            <div class="timer__block"><div class="timer__label">DAYS</div><div class="timer__value" id="timerDays">0</div></div>
+            <div class="timer__block"><div class="timer__label">HRS</div><div class="timer__value" id="timerHours">00</div></div>
+            <div class="timer__block"><div class="timer__label">MIN</div><div class="timer__value" id="timerMins">00</div></div>
+            <div class="timer__block"><div class="timer__label">SEC</div><div class="timer__value" id="timerSecs">00</div></div>
+          </div>
+
+          <div class="timer__meta">
+            <div class="timer__pill">
+              <span class="timer__dot" id="timerDot"></span>
+              <span id="timerModeText">—</span>
+            </div>
+            <div>total days: <span id="timerTotalDays" style="color:rgba(255,255,255,.9)">0</span></div>
+          </div>
+
+          <div class="timer__hint">All time is precious. Keep going.</div>
+        </div>
+      </article>
+    </div>
+
+    <div style="text-align: center; padding: 40px 0;">
+      <a class="scrollHint" href="#event" aria-label="Scroll to the events">
+        <span class="scrollHint__mouse" aria-hidden="true"></span>
+        <span class="scrollHint__text">Scroll</span>
       </a>
-
-      <nav class="nav" aria-label="Primary">
-        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
-          <span class="nav__toggleLines" aria-hidden="true"></span>
-          <span class="sr-only">Open menu</span>
-        </button>
-
-        <div class="nav__menu" id="navMenu">
-          <a class="nav__link" href="#about">About</a>
-          <a class="nav__link" href="/event/">Event</a>
-          <a class="nav__link" href="/writing/">Writing</a>
-          <a class="nav__link" href="#contact">Contact</a>
-          <a class="btn btn--ghost" href="mailto:clarechenxy26@gmail.com">Let’s talk</a>
-        </div>
-      </nav>
     </div>
-  </header>
+  </div>
+</section>
 
-  <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero__bg" aria-hidden="true"></div>
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="hero__halo" aria-hidden="true"></div>
+<!-- TRUST STRIP -->
+<section class="strip">
+  <div class="container strip__inner">
+    <div class="strip__item reveal">Growing</div>
+    <div class="strip__dot" aria-hidden="true"></div>
+    <div class="strip__item reveal">Learning</div>
+    <div class="strip__dot" aria-hidden="true"></div>
+    <div class="strip__item reveal">Building</div>
+  </div>
+</section>
 
-      <div class="container hero__inner">
-        <p class="kicker reveal">
-          <span class="pill">A life in progress</span>
-          This is where my story begins.
+<!-- UPCOMING EVENTS -->
+<section class="section" id="event">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title reveal">Upcoming events</h2>
+      <p class="section__lead reveal">Take a look at what's next and join the journey.</p>
+    </div>
+
+    <div class="grid">
+      {% for event in upcoming limit: 2 %}
+        <article class="card reveal">
+          <div class="card__top">
+            {% assign tagList = event.tags | default: 'Event' %}
+            {% if tagList.size > 0 and tagList.first %}
+              {% for tag in tagList %}
+                <span class="tag{% unless forloop.first %} tag--muted{% endunless %}">{{ tag }}</span>
+              {% endfor %}
+            {% else %}
+              <span class="tag">{{ tagList }}</span>
+            {% endif %}
+          </div>
+          <h3 class="card__title">{{ event.title }}</h3>
+          <p class="card__text">{{ event.description }}</p>
+          <div class="card__date">
+            <span class="card__date--icon">📅</span>
+            {{ event.date | date: "%-d %B %Y" }}
+          </div>
+          <div class="card__actions">
+            <a class="link" href="{{ event.url | relative_url }}" aria-label="Open event">View details</a>
+          </div>
+        </article>
+      {% else %}
+        <p style="text-align: center; color: var(--muted); grid-column: 1/-1; padding: 40px 0;">No upcoming events at the moment. Check back soon!</p>
+      {% endfor %}
+    </div>
+    <div style="margin-top: 18px; text-align: center;">
+      <a class="link" href="{{ '/event/' | relative_url }}">More events</a>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section class="section" id="writing">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title reveal">Writing</h2>
+      <p class="section__lead reveal">Short notes. Practical ideas. No fluff.</p>
+    </div>
+
+    <div class="posts">
+      {% for post in recent_writing limit: 2 %}
+        <a class="post reveal" href="{{ post.url | relative_url }}">
+          <div class="post__meta">
+            <span class="post__date">{{ post.date | date: "%-d %B %Y" }} &middot; Note</span>
+            {% if post.readTime %}
+              <span class="post__dot" aria-hidden="true"></span>
+              <span class="post__read">{{ post.readTime }}</span>
+            {% endif %}
+          </div>
+          <h3 class="post__title">{{ post.title }}</h3>
+          <p class="post__text">{{ post.description }}</p>
+        </a>
+      {% else %}
+        <p style="text-align: center; color: var(--muted); padding: 20px 0;">No writing published yet.</p>
+      {% endfor %}
+    </div>
+    <div style="margin-top: 16px; text-align: center;">
+      <a class="link" href="{{ '/writing/' | relative_url }}">More writing</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section--tint" id="about">
+  <div class="container">
+    <div class="split">
+      <div class="split__left reveal">
+        <h2 class="section__title">About</h2>
+        <p class="section__lead">
+          I'm only just beginning—tiny hands, curious eyes, and a whole world waiting to be discovered.
+          This little space grows with me, holding moments, thoughts, and stories from each step of my journey.
         </p>
+        <p class="muted">If you're here, you're part of it too—watching me become who I'm meant to be.</p>
 
-        <h1 class="hero__title reveal">
-          Driven by Clarity. Defined by <span class="accent">Clare</span>.
-        </h1>
-
-        <p class="hero__lead reveal">
-          Every second shapes who I become.<br>
-          <span class="muted">(Clarity begins here.)</span>
-        </p>
-
-        <div class="hero__actions reveal">
-          <a class="btn btn--primary" href="#event">Upcoming events</a>
-          <a class="btn btn--soft" href="#contact">Get in touch</a>
-        </div>
-
-        <div class="grid grid--single">
-          <article class="card card--timer reveal">
-            <div class="timer">
-              <div class="timer__header">
-                <div>
-                  <div class="timer__title" id="timerTitle">SINCE</div>
-                  <div class="timer__subtitle" id="timerSubtitle">Loading…</div>
-                </div>
-
-                <div class="timer__status">
-                  <div class="timer__clock" id="timerClock">--:--:--</div>
-                  <div class="timer__mode" id="timerMode">LIVE</div>
-                </div>
-              </div>
-
-              <div class="timer__grid" aria-label="timer blocks">
-                <div class="timer__block">
-                  <div class="timer__label">YEARS</div>
-                  <div class="timer__value" id="timerYears">0</div>
-                </div>
-                <div class="timer__block">
-                  <div class="timer__label">DAYS</div>
-                  <div class="timer__value" id="timerDays">0</div>
-                </div>
-                <div class="timer__block">
-                  <div class="timer__label">HRS</div>
-                  <div class="timer__value" id="timerHours">00</div>
-                </div>
-                <div class="timer__block">
-                  <div class="timer__label">MIN</div>
-                  <div class="timer__value" id="timerMins">00</div>
-                </div>
-                <div class="timer__block">
-                  <div class="timer__label">SEC</div>
-                  <div class="timer__value" id="timerSecs">00</div>
-                </div>
-              </div>
-
-              <div class="timer__meta">
-                <div class="timer__pill">
-                  <span class="timer__dot" id="timerDot"></span>
-                  <span id="timerModeText">—</span>
-                </div>
-
-                <div>
-                  total days: <span id="timerTotalDays" style="color:rgba(255,255,255,.9)">0</span>
-                </div>
-              </div>
-
-              <div class="timer__hint">
-                All time is precious. Keep going.
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <!-- Scroll hint -->
-        <div style="text-align: center; padding: 40px 0;">
-          <a class="scrollHint" href="#event" aria-label="Scroll to the events">
-            <span class="scrollHint__mouse" aria-hidden="true"></span>
-            <span class="scrollHint__text">Scroll</span>
-          </a>
+        <div class="chips">
+          <span class="chip">Growing up</span>
+          <span class="chip">Little Moments</span>
+          <span class="chip">A story in time</span>
+          <span class="chip">Be Clare</span>
         </div>
       </div>
-    </section>
 
-    <!-- TRUST STRIP -->
-    <section class="strip">
-      <div class="container strip__inner">
-        <div class="strip__item reveal">Growing</div>
-        <div class="strip__dot" aria-hidden="true"></div>
-        <div class="strip__item reveal">Learning</div>
-        <div class="strip__dot" aria-hidden="true"></div>
-        <div class="strip__item reveal">Building</div>
-      </div>
-    </section>
-
-    <!-- UPCOMING EVENTS -->
-    <section class="section" id="event">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="section__title reveal">Upcoming events</h2>
-          <p class="section__lead reveal">
-            Take a look at what’s next and join the journey.
-          </p>
+      <div class="split__right reveal">
+        <div class="panel">
+          <h3 class="panel__title">Principles</h3>
+          <ul class="list">
+            <li><span class="tick" aria-hidden="true"></span>Choose right over easy.</li>
+            <li><span class="tick" aria-hidden="true"></span>Stay curious, stay kind.</li>
+            <li><span class="tick" aria-hidden="true"></span>Truth over approval.</li>
+            <li><span class="tick" aria-hidden="true"></span>Begin again, always.</li>
+          </ul>
+          <a class="btn btn--soft btn--full" href="mailto:clarechenxy26@gmail.com">Talk with me</a>
         </div>
-
-        <div class="grid" id="eventCardsContainer">
-          <p style="text-align: center; color: var(--muted); grid-column: 1/-1; padding: 40px 0;">Loading events...</p>
-        </div>
-        <div style="margin-top: 18px; text-align: center;">
-          <a class="link" href="/event/">More events</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- WRITING -->
-    <section class="section" id="writing">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="section__title reveal">Writing</h2>
-          <p class="section__lead reveal">Short notes. Practical ideas. No fluff.</p>
-        </div>
-
-        <div class="posts" id="writingPostsContainer">
-          <p style="text-align: center; color: var(--muted); padding: 20px 0;">Loading writing...</p>
-        </div>
-        <div style="margin-top: 16px; text-align: center;">
-          <a class="link" href="/writing/">More writing</a>
-        </div>
-      </div>
-    </section>
-
-    
-    <!-- ABOUT (dark glass panel) -->
-    <section class="section section--tint" id="about">
-      <div class="container">
-        <div class="split">
-          <div class="split__left reveal">
-            <h2 class="section__title">About</h2>
-            <p class="section__lead">
-              I’m only just beginning—tiny hands, curious eyes, and a whole world waiting to be discovered.
-              This little space grows with me, holding moments, thoughts, and stories from each step of my journey.
-            </p>
-            <p class="muted">
-              If you’re here, you’re part of it too—watching me become who I’m meant to be.
-            </p>
-
-            <div class="chips">
-              <span class="chip">Growing up</span>
-              <span class="chip">Little Moments</span>
-              <span class="chip">A story in time</span>
-              <span class="chip">Be Clare</span>
-            </div>
-          </div>
-
-          <div class="split__right reveal">
-            <div class="panel">
-              <h3 class="panel__title">Principles</h3>
-              <ul class="list">
-                <li><span class="tick" aria-hidden="true"></span>Choose right over easy.</li>
-                <li><span class="tick" aria-hidden="true"></span>Stay curious, stay kind.</li>
-                <li><span class="tick" aria-hidden="true"></span>Truth over approval.</li>
-                <li><span class="tick" aria-hidden="true"></span>Begin again, always.</li>
-              </ul>
-              <a class="btn btn--soft btn--full" href="mailto:clarechenxy26@gmail.com">Talk with me</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT CTA -->
-    <section class="cta" id="contact">
-      <div class="container cta__inner">
-        <div class="cta__copy reveal">
-          <h2 class="cta__title">Can't wait to contact me?</h2>
-          <p class="cta__lead">Send a quick message — I’ll reply with next steps.</p>
-        </div>
-
-        <form class="form reveal" id="contactForm" action="https://submit.jotform.com/submit/260793218969069" method="post" accept-charset="utf-8" autocomplete="on">
-          <input type="hidden" name="formID" value="260793218969069" />
-          <input type="hidden" name="simple_spc" value="260793218969069-260793218969069" />
-          <input type="text" name="website" value="" tabindex="-1" autocomplete="off" class="form__honeypot" aria-hidden="true" />
-
-          <div class="form__row">
-            <div>
-              <label class="sr-only" for="first-name">First name</label>
-              <input class="input" id="first-name" name="q4_name[first]" placeholder="First name" autocomplete="given-name" />
-            </div>
-            <div>
-              <label class="sr-only" for="last-name">Last name</label>
-              <input class="input" id="last-name" name="q4_name[last]" placeholder="Last name" autocomplete="family-name" />
-            </div>
-          </div>
-
-          <label class="sr-only" for="email">Email</label>
-          <input class="input" id="email" name="q5_email" type="email" placeholder="Email" autocomplete="email" />
-
-          <label class="sr-only" for="message">Message</label>
-          <textarea class="input input--area" id="message" name="q6_typeA" placeholder="Let’s hear your thoughts"></textarea>
-
-          <div class="form__captcha" id="contactCaptcha" aria-hidden="true">
-            <p class="form__caption">Please verify that you are human</p>
-            <div id="hcaptcha_input_7" class="h-captcha" data-sitekey="772f4a50-7161-425e-8cd5-4d7e361ab765" data-callback="hcaptchaCallbackinput_7" data-expired-callback="hcaptchaExpiredCallbackinput_7"></div>
-            <input type="hidden" id="input_7" name="hcaptcha_visible" required />
-          </div>
-
-          <button class="btn btn--primary btn--full" type="submit">Send</button>
-
-          <div class="form__links">
-            <a class="link link--muted" href="https://github.com/jimmy1992abc" target="_blank" rel="noreferrer">GitHub</a>
-            <span class="dot" aria-hidden="true"></span>
-            <a class="link link--muted" href="https://www.clarechen.com.au/" target="_blank" rel="noreferrer">Blog</a>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__left">
-        <span class="brand__dot" aria-hidden="true"></span>
-        <span>© <span id="year"></span> Clarechen.com.au</span>
-      </div>
-      <div class="footer__right">
-        <a class="link link--muted" href="#top">Back to top</a>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="assets/js/site.js" defer></script>
-  <script src="assets/js/timer.js" defer></script>
-  <script src="assets/js/events.js" defer></script>
-  <script src="assets/js/writing.js" defer></script>
-  <script src="https://hcaptcha.com/1/api.js" async defer></script>
-  <script>
-    // Wait for events.js to load, then initialize
-    function initEvents() {
-      if (typeof renderEventCards === 'undefined') {
-        // renderEventCards not ready yet, try again soon
-        setTimeout(initEvents, 100);
+<!-- CONTACT CTA -->
+<section class="cta" id="contact">
+  <div class="container cta__inner">
+    <div class="cta__copy reveal">
+      <h2 class="cta__title">Can't wait to contact me?</h2>
+      <p class="cta__lead">Send a quick message — I'll reply with next steps.</p>
+    </div>
+
+    <form class="form reveal" id="contactForm" action="https://submit.jotform.com/submit/260793218969069" method="post" accept-charset="utf-8" autocomplete="on">
+      <input type="hidden" name="formID" value="260793218969069" />
+      <input type="hidden" name="simple_spc" value="260793218969069-260793218969069" />
+      <div class="form__honeypot" aria-hidden="true" inert>
+        <input type="text" name="website" value="" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="form__row">
+        <div>
+          <label class="sr-only" for="first-name">First name</label>
+          <input class="input" id="first-name" name="q4_name[first]" placeholder="First name" autocomplete="given-name" />
+        </div>
+        <div>
+          <label class="sr-only" for="last-name">Last name</label>
+          <input class="input" id="last-name" name="q4_name[last]" placeholder="Last name" autocomplete="family-name" />
+        </div>
+      </div>
+
+      <label class="sr-only" for="email">Email</label>
+      <input class="input" id="email" name="q5_email" type="email" placeholder="Email" autocomplete="email" />
+
+      <label class="sr-only" for="message">Message</label>
+      <textarea class="input input--area" id="message" name="q6_typeA" placeholder="Let's hear your thoughts"></textarea>
+
+      <div class="form__captcha" id="contactCaptcha" aria-hidden="true">
+        <p class="form__caption">Please verify that you are human</p>
+        <div id="hcaptcha_input_7" class="h-captcha" data-sitekey="772f4a50-7161-425e-8cd5-4d7e361ab765" data-callback="hcaptchaCallbackinput_7" data-expired-callback="hcaptchaExpiredCallbackinput_7"></div>
+        <input type="hidden" id="input_7" name="hcaptcha_visible" required />
+      </div>
+
+      <button class="btn btn--primary btn--full" type="submit">Send</button>
+
+      <div class="form__links">
+        <a class="link link--muted" href="https://github.com/jimmy1992abc" target="_blank" rel="noreferrer">GitHub</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link link--muted" href="https://www.clarechen.com.au/" target="_blank" rel="noreferrer">Blog</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script src="{{ '/assets/js/timer.js' | relative_url }}" defer></script>
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
+    const captcha = document.getElementById('contactCaptcha');
+    const captchaInput = document.getElementById('input_7');
+    if (!form || !captcha || !captchaInput) return;
+
+    const revealCaptcha = () => {
+      if (captcha.classList.contains('is-visible')) return;
+      captcha.classList.add('is-visible');
+      captcha.setAttribute('aria-hidden', 'false');
+      setTimeout(() => captcha.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
+    };
+
+    form.addEventListener('submit', (event) => {
+      if (!captcha.classList.contains('is-visible')) {
+        event.preventDefault();
+        revealCaptcha();
         return;
       }
-      try {
-        renderEventCards();
-      } catch (error) {
-        console.error('Failed to render event cards:', error);
-        const container = document.getElementById('eventCardsContainer');
-        if (container) {
-          container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--muted);">Error loading events. Please refresh the page.</p>';
-        }
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initEvents);
-    } else {
-      initEvents();
-    }
-
-    function initWriting() {
-      if (typeof renderHomepageWriting === 'undefined') {
-        setTimeout(initWriting, 100);
-        return;
-      }
-      renderHomepageWriting();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initWriting);
-    } else {
-      initWriting();
-    }
-
-    function initContactForm() {
-      const form = document.getElementById('contactForm');
-      const captcha = document.getElementById('contactCaptcha');
-      const captchaInput = document.getElementById('input_7');
-
-      if (!form || !captcha || !captchaInput) {
-        return;
-      }
-
-      const revealCaptcha = () => {
-        if (captcha.classList.contains('is-visible')) {
-          return;
-        }
-
-        captcha.classList.add('is-visible');
-        captcha.setAttribute('aria-hidden', 'false');
-
-        setTimeout(() => {
-          captcha.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 120);
-      };
-
-      form.addEventListener('submit', (event) => {
-        if (!captcha.classList.contains('is-visible')) {
-          event.preventDefault();
-          revealCaptcha();
-          return;
-        }
-
-        if (!captchaInput.value) {
-          event.preventDefault();
-          revealCaptcha();
-          captcha.classList.add('form__captcha--attention');
-        }
-      });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initContactForm);
-    } else {
-      initContactForm();
-    }
-
-    function hcaptchaCallbackinput_7() {
-      const captcha = document.getElementById('contactCaptcha');
-      const hiddenInput = document.getElementById('input_7');
-      if (hiddenInput) {
-        hiddenInput.value = '1';
-      }
-      if (captcha) {
-        captcha.classList.remove('form__captcha--attention');
-      }
-    }
-
-    function hcaptchaExpiredCallbackinput_7() {
-      const captcha = document.getElementById('contactCaptcha');
-      const hiddenInput = document.getElementById('input_7');
-      if (hiddenInput) {
-        hiddenInput.value = '';
-      }
-      if (captcha) {
+      if (!captchaInput.value) {
+        event.preventDefault();
+        revealCaptcha();
         captcha.classList.add('form__captcha--attention');
       }
-    }
-  </script>
-</body>
-</html>
+    });
+  });
+
+  function hcaptchaCallbackinput_7() {
+    const captcha = document.getElementById('contactCaptcha');
+    const hiddenInput = document.getElementById('input_7');
+    if (hiddenInput) hiddenInput.value = '1';
+    if (captcha) captcha.classList.remove('form__captcha--attention');
+  }
+  function hcaptchaExpiredCallbackinput_7() {
+    const captcha = document.getElementById('contactCaptcha');
+    const hiddenInput = document.getElementById('input_7');
+    if (hiddenInput) hiddenInput.value = '';
+    if (captcha) captcha.classList.add('form__captcha--attention');
+  }
+</script>

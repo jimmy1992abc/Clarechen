@@ -1,11 +1,9 @@
 ---
 title: "Calm systems beat heroic effort"
-date: "2026-03-08"
+date: 2026-03-08
 readTime: "6 min read"
 description: "A practical framework for removing friction from work that repeats every week."
 ---
-
-# Calm systems beat heroic effort
 
 Most teams do not fail because people are lazy. They fail because the process asks everyone to be a hero, every single week.
 

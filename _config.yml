@@ -1,0 +1,54 @@
+title: Clare Chen
+description: A modern personal homepage for Clare Chen — events, writing, and contact.
+url: https://clarechen.com.au
+author:
+  name: Clare Chen
+  email: clarechenxy26@gmail.com
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+timezone: Australia/Sydney
+
+# Plugins (all GitHub Pages whitelisted)
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Collections: every .md in _events and _writing becomes a rendered page
+collections:
+  events:
+    output: true
+    permalink: /event/:name/
+  writing:
+    output: true
+    permalink: /writing/:name/
+
+# Default front-matter
+defaults:
+  - scope:
+      path: ""
+      type: events
+    values:
+      layout: event
+  - scope:
+      path: ""
+      type: writing
+    values:
+      layout: writing
+
+# Files/folders Jekyll should NOT copy into _site
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .gitignore
+  - memory
+  - node_modules
+
+# Social / SEO
+social:
+  links:
+    - https://github.com/jimmy1992abc

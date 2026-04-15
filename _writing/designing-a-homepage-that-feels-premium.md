@@ -1,11 +1,9 @@
 ---
 title: "Designing a homepage that feels premium"
-date: "2026-03-14"
+date: 2026-03-14
 readTime: "7 min read"
 description: "How typography, spacing, and visual rhythm can make a small site feel intentional and high quality."
 ---
-
-# Designing a homepage that feels premium
 
 A premium homepage is not about adding more effects. It is about making every choice feel deliberate.
 

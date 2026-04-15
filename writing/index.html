@@ -1,89 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b1220" />
-  <title>Writing - Clare Chen</title>
-  <meta name="description" content="Writing by Clare Chen." />
+---
+layout: default
+title: "Writing — Clare Chen"
+description: "Short notes. Practical ideas. No fluff."
+permalink: /writing/
+---
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&display=swap" rel="stylesheet" />
+{% assign posts = site.writing | sort: 'date' | reverse %}
 
-  <link rel="icon" href="../assets/img/halo.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="../assets/css/site.css" />
-</head>
-<body>
-  <div class="scrollbar" aria-hidden="true">
-    <div class="scrollbar__bar" id="scrollbarBar"></div>
-  </div>
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h1 class="section__title reveal">Writing</h1>
+      <p class="section__lead reveal">Short notes. Practical ideas. No fluff.</p>
+    </div>
 
-  <header class="header" id="header">
-    <div class="container header__inner">
-      <a class="brand" href="/" aria-label="Home">
-        <span class="brand__dot" aria-hidden="true"></span>
-        <span class="brand__text">Clare Chen</span>
+    <div class="posts">
+      {% for post in posts %}
+      <a class="post reveal" href="{{ post.url | relative_url }}">
+        <div class="post__meta">
+          <span class="post__date">{{ post.date | date: "%-d %B %Y" }} &middot; Note</span>
+          {% if post.readTime %}
+            <span class="post__dot" aria-hidden="true"></span>
+            <span class="post__read">{{ post.readTime }}</span>
+          {% endif %}
+        </div>
+        <h2 class="post__title">{{ post.title }}</h2>
+        <p class="post__text">{{ post.description }}</p>
       </a>
-      <nav class="nav" aria-label="Primary">
-        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
-          <span class="nav__toggleLines" aria-hidden="true"></span>
-          <span class="sr-only">Open menu</span>
-        </button>
-        <div class="nav__menu" id="navMenu">
-          <a class="nav__link" href="/#about">About</a>
-          <a class="nav__link" href="/event/">Event</a>
-          <a class="nav__link nav__link--active" href="/writing/">Writing</a>
-          <a class="nav__link" href="/#contact">Contact</a>
-          <a class="btn btn--ghost" href="/#contact">Let's talk</a>
-        </div>
-      </nav>
+      {% else %}
+      <p style="text-align:center;color:var(--muted);padding:20px 0;">No writing published yet.</p>
+      {% endfor %}
     </div>
-  </header>
-
-  <main>
-    <section class="section">
-      <div class="container">
-        <div class="section__head">
-          <h1 class="section__title reveal">Writing</h1>
-          <p class="section__lead reveal">Short notes. Practical ideas. No fluff.</p>
-        </div>
-
-        <div class="posts" id="writingListContainer">
-          <p style="text-align:center;color:var(--muted);padding:20px 0;">Loading writing...</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__left">
-        <span class="brand__dot" aria-hidden="true"></span>
-        <span>© <span id="year"></span> Clarechen.com.au</span>
-      </div>
-      <div class="footer__right">
-        <a class="link link--muted" href="#top">Back to top</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../assets/js/site.js" defer></script>
-  <script src="../assets/js/writing.js" defer></script>
-  <script>
-    function initWritingPage() {
-      if (typeof renderWritingPage === 'undefined') {
-        setTimeout(initWritingPage, 100);
-        return;
-      }
-      renderWritingPage();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initWritingPage);
-    } else {
-      initWritingPage();
-    }
-  </script>
-</body>
-</html>
+  </div>
+</section>

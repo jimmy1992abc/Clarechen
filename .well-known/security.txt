@@ -1,0 +1,3 @@
+Contact: mailto:clarechenxy26@gmail.com
+Preferred-Languages: en
+Canonical: https://clarechen.com.au/.well-known/security.txt
